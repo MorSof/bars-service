@@ -18,16 +18,19 @@ export class BarsService {
 
   async create(bar: Bar): Promise<Bar> {
     let barParentEntity: BarEntity = this.barsEntityConverter.toEntity(bar);
-    barParentEntity = await this.saveBar(barParentEntity);
-    const savedBar: Bar = this.barsEntityConverter.toModel(barParentEntity);
-    return savedBar;
+    barParentEntity = await this.saveBars(barParentEntity);
+    bar = this.barsEntityConverter.toModel(barParentEntity);
+    return bar;
   }
 
-  private async saveBar(barParentEntity: BarEntity): Promise<BarEntity> {
+  private async saveBars(barParentEntity: BarEntity): Promise<BarEntity> {
     if (barParentEntity.milestones && barParentEntity.milestones.length > 0) {
       const milestoneEntities: BarEntity[] = barParentEntity.milestones;
+
       await Promise.all(
-        milestoneEntities.map((milestone) => this.saveBar(milestone)),
+        milestoneEntities.map((milestone) => {
+          return this.saveBars(milestone);
+        }),
       );
       barParentEntity.milestones = milestoneEntities;
     }
