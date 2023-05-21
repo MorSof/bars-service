@@ -16,7 +16,7 @@ import { BarsResponseDto } from '../dtos/bars-response.dto';
 import { BarsDtoConverter } from '../services/bars-dto.converter';
 
 @ApiTags('bars')
-@Controller('bars')
+@Controller('v1/bars')
 export class BarsController {
   constructor(
     private readonly barsService: BarsService,
