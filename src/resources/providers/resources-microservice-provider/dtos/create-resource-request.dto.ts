@@ -1,5 +1,5 @@
 export class CreateResourceRequestDto {
-  ownerId: number;
+  ownerId: string;
   ownerType: string;
   type: string;
   name: string;

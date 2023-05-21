@@ -1,12 +1,9 @@
 import { Resource } from '../models/resource.model';
 
 export abstract class ResourcesProvider {
-  abstract createResources(
-    resource: Resource[],
-    levelId: number,
-  ): Promise<Resource[]>;
+  abstract createResources(resource: Resource[]): Promise<Resource[]>;
 
-  abstract getResourcesByLevelId(
+  abstract getResourcesByOwnerId(
     levelId: number,
     fulfillResourcesProbabilities: boolean,
   ): Promise<Resource[]>;

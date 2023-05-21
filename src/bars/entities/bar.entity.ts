@@ -12,6 +12,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
+import { Resource } from '../../resources/models/resource.model';
 
 @Entity({ name: 'bars' })
 @Unique(['name', 'barIndex'])
@@ -40,6 +41,8 @@ export class BarEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  rewards: Resource[];
 
   @BeforeInsert()
   beforeInsert() {

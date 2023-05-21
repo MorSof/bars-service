@@ -1,7 +1,16 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Query,
+  DefaultValuePipe,
+  ParseBoolPipe,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { BarsService } from '../services/bars.service';
 import { Bar } from '../models/bar.model';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { BarsRequestDto } from '../dtos/bars-request.dto';
 import { BarsResponseDto } from '../dtos/bars-response.dto';
 import { BarsDtoConverter } from '../services/bars-dto.converter';
@@ -26,5 +35,21 @@ export class BarsController {
       this.barsDtoConverter.toModel(barsRequestDto),
     );
     return this.barsDtoConverter.toDto(bar);
+  }
+
+  @ApiOkResponse({
+    description: 'The bars records',
+    type: BarsResponseDto,
+    isArray: true,
+  })
+  @ApiQuery({ name: 'name', type: String, required: false })
+  @ApiQuery({ name: 'barIndex', type: Number, required: false })
+  @Get()
+  async findByValue(
+    @Query('name') name: string,
+    @Query('barIndex') barIndex: number,
+  ): Promise<BarsResponseDto[]> {
+    const bars: Bar[] = await this.barsService.findByValues(name, barIndex);
+    return bars.map((resource) => this.barsDtoConverter.toDto(resource));
   }
 }

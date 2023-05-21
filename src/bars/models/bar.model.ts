@@ -3,35 +3,39 @@ import { BadRequestException } from '@nestjs/common';
 
 export class Bar {
   id: number;
-  name: string;
-  barIndex: number;
   maxValue: number;
+  name?: string;
+  barIndex?: number;
   milestones?: Bar[];
   rewards?: Resource[];
 
   constructor(partial: Partial<Bar>) {
     Object.assign(this, partial);
-
-    if (this.milestones) {
-      this.validateMaxValueSum(this.milestones);
-    }
+    this.setMilestones(partial.name, partial.milestones);
   }
 
-  private validateMaxValueSum(milestones: Bar[]): void {
-    let sum = 0;
+  private setMilestones(barName: string, milestones: Bar[]): void {
+    if (barName && milestones) {
+      let sum = 0;
 
-    for (const milestone of milestones) {
-      sum += milestone.maxValue;
+      for (let i = 0; i < milestones.length; i++) {
+        const milestone = milestones[i];
+        if (!milestone.name || !milestone.barIndex) {
+          milestone.barIndex = i;
+          milestone.name = `${barName}-${i}`;
+        }
+        sum += milestone.maxValue;
 
-      if (milestone.milestones) {
-        this.validateMaxValueSum(milestone.milestones);
+        if (milestone.milestones) {
+          this.setMilestones(milestone.name, milestone.milestones);
+        }
       }
-    }
 
-    if (sum > this.maxValue) {
-      throw new BadRequestException(
-        "Sum of milestones' maxValue exceeds the parent bar's maxValue.",
-      );
+      if (sum > this.maxValue) {
+        throw new BadRequestException(
+          "Sum of milestones' maxValue exceeds the parent bar's maxValue.",
+        );
+      }
     }
   }
 }

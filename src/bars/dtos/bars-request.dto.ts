@@ -11,22 +11,10 @@ import { ResourceRequestDto } from '../../resources/dtos/resource-request.dto';
 **/
 export class MilestoneRequestDto {
   @ApiModelProperty({
-    description: 'The milestone bar name',
-    required: true,
-  })
-  name: string;
-
-  @ApiModelProperty({
-    type: 'number',
-    description: 'The milestone bar index',
-    required: true,
-  })
-  barIndex: number;
-
-  @ApiModelProperty({
     type: 'number',
     description: 'The max value to fill the milestone bar',
     required: true,
+    default: 50,
   })
   maxValue: number;
 
@@ -40,24 +28,25 @@ export class MilestoneRequestDto {
 
 export class BarsRequestDto {
   @ApiModelProperty({
+    type: 'number',
+    description: 'The max value to fill the bar',
+    required: true,
+    default: 100,
+  })
+  maxValue: number;
+
+  @ApiModelProperty({
     description: 'The bar name',
     required: true,
   })
-  name: string;
+  name?: string;
 
   @ApiModelProperty({
     type: 'number',
     description: 'The bar index',
     required: true,
   })
-  barIndex: number;
-
-  @ApiModelProperty({
-    type: 'number',
-    description: 'The max value to fill the bar',
-    required: true,
-  })
-  maxValue: number;
+  barIndex?: number;
 
   @ApiModelProperty({
     isArray: true,

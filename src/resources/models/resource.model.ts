@@ -1,8 +1,10 @@
 export class Resource {
   id: number;
-  groupId?: string;
   type: string;
   name: string;
+  ownerId: string;
+  ownerType: string;
+  groupId: string;
   amount?: number;
   receivingProbability?: number;
   rarenessProbability?: number;

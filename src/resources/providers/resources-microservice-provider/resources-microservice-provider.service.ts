@@ -20,12 +20,11 @@ export class ResourcesMicroserviceProvider extends ResourcesProvider {
     super();
   }
 
-  async createResources(
-    resources: Resource[],
-    levelId: number,
-  ): Promise<Resource[]> {
+  async createResources(resources: Resource[]): Promise<Resource[]> {
     const body: CreateResourceRequestDto[] = resources.map((resource) => {
       const {
+        ownerId,
+        ownerType,
         type,
         name,
         amount,
@@ -35,8 +34,8 @@ export class ResourcesMicroserviceProvider extends ResourcesProvider {
         extraArgs,
       } = resource;
       return new CreateResourceRequestDto({
-        ownerId: levelId,
-        ownerType: 'level',
+        ownerId,
+        ownerType,
         type,
         name,
         groupId,
@@ -68,7 +67,7 @@ export class ResourcesMicroserviceProvider extends ResourcesProvider {
     );
   }
 
-  async getResourcesByLevelId(
+  async getResourcesByOwnerId(
     levelId: number,
     fulfillResourcesProbabilities: boolean,
   ): Promise<Resource[]> {
