@@ -9,10 +9,7 @@ export class ResourcesService {
 
   async createBarResources(bar: Bar): Promise<Resource[]> {
     const resourcesToCreate: Resource[] =
-      await this.extractResourcesFromBarRecursively(
-        `${bar.name}-${bar.barIndex}`,
-        bar,
-      );
+      await this.extractResourcesFromBarRecursively(`${bar.name}`, bar);
     return await this.resourcesProvider.createResources(resourcesToCreate);
   }
 

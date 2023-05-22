@@ -1,4 +1,4 @@
-import { TreeRepository } from 'typeorm';
+import { IsNull, TreeRepository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   ConflictException,
@@ -21,6 +21,7 @@ export class BarsService {
 
   async create(bar: Bar): Promise<Bar> {
     let barParentEntity: BarEntity = this.barsEntityConverter.toEntity(bar);
+    await this.validateBarDoesNotExists(barParentEntity);
     barParentEntity = await this.saveBars(barParentEntity);
     bar = this.barsEntityConverter.toModel(barParentEntity);
     await this.resourcesService.createBarResources(bar);
@@ -32,6 +33,7 @@ export class BarsService {
       where: {
         name,
         barIndex,
+        parent: IsNull(),
       },
       relations: ['milestones'],
     });
@@ -73,13 +75,11 @@ export class BarsService {
       const milestoneEntities: BarEntity[] = barParentEntity.milestones;
       await Promise.all(
         milestoneEntities.map(async (milestone) => {
-          await this.validateBarDoesNotExists(milestone);
           return this.saveBars(milestone);
         }),
       );
       barParentEntity.milestones = milestoneEntities;
     }
-    await this.validateBarDoesNotExists(barParentEntity);
     return await this.barsRepository.save(barParentEntity);
   }
 
@@ -87,6 +87,7 @@ export class BarsService {
     const entity = await this.barsRepository.findOneBy({
       name: barParentEntity.name,
       barIndex: barParentEntity.barIndex,
+      parent: IsNull(),
     });
     if (entity) {
       throw new ConflictException(

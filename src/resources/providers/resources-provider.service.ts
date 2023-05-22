@@ -4,7 +4,7 @@ export abstract class ResourcesProvider {
   abstract createResources(resource: Resource[]): Promise<Resource[]>;
 
   abstract getResourcesByOwnerId(
-    levelId: number,
+    ownerId: number,
     fulfillResourcesProbabilities: boolean,
   ): Promise<Resource[]>;
 

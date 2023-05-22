@@ -15,7 +15,6 @@ import {
 import { Resource } from '../../resources/models/resource.model';
 
 @Entity({ name: 'bars' })
-@Unique(['name', 'barIndex'])
 export class BarEntity {
   @PrimaryGeneratedColumn()
   id: number;

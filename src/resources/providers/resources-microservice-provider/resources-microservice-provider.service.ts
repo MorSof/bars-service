@@ -68,11 +68,11 @@ export class ResourcesMicroserviceProvider extends ResourcesProvider {
   }
 
   async getResourcesByOwnerId(
-    levelId: number,
+    ownerId: number,
     fulfillResourcesProbabilities: boolean,
   ): Promise<Resource[]> {
     const getResourcesRequestDto: GetResourcesRequestDto = {
-      ownerId: levelId,
+      ownerId: ownerId,
       ownerType: 'level',
     };
     if (fulfillResourcesProbabilities) {

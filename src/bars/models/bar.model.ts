@@ -22,7 +22,7 @@ export class Bar {
         const milestone = milestones[i];
         if (!milestone.name || !milestone.barIndex) {
           milestone.barIndex = i;
-          milestone.name = `${barName}-${i}`;
+          milestone.name = barName;
         }
         sum += milestone.maxValue;
 
