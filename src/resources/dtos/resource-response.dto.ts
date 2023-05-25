@@ -30,6 +30,12 @@ export class ResourceResponseDto {
   rarenessProbability?: number;
 
   @ApiProperty({
+    isArray: true,
+    type: ResourceResponseDto,
+  })
+  resources?: ResourceResponseDto[];
+
+  @ApiProperty({
     nullable: true,
   })
   extraArgs?: object;

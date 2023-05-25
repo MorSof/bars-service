@@ -31,6 +31,7 @@ export class ResourcesMicroserviceProvider extends ResourcesProvider {
         groupId,
         receivingProbability,
         rarenessProbability,
+        resources,
         extraArgs,
       } = resource;
       return new CreateResourceRequestDto({
@@ -42,6 +43,7 @@ export class ResourcesMicroserviceProvider extends ResourcesProvider {
         amount,
         receivingProbability,
         rarenessProbability,
+        resources,
         extraArgs,
       });
     });
@@ -62,6 +64,7 @@ export class ResourcesMicroserviceProvider extends ResourcesProvider {
           amount: dto.amount,
           receivingProbability: dto.receivingProbability,
           rarenessProbability: dto.rarenessProbability,
+          resources,
           extraArgs: dto.extraArgs,
         }),
     );
@@ -94,6 +97,7 @@ export class ResourcesMicroserviceProvider extends ResourcesProvider {
           amount: dto.amount,
           receivingProbability: dto.receivingProbability,
           rarenessProbability: dto.rarenessProbability,
+          resources: dto.resources,
           extraArgs: dto.extraArgs,
         }),
     );

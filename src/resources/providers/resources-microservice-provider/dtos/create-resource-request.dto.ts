@@ -7,6 +7,7 @@ export class CreateResourceRequestDto {
   amount?: number;
   receivingProbability: number;
   rarenessProbability: number;
+  resources: any;
   extraArgs: Record<string, any>;
 
   constructor(partial: Partial<CreateResourceRequestDto>) {

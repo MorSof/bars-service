@@ -12,6 +12,7 @@ export class ResourcesDtoConverter {
       type,
       receivingProbability,
       rarenessProbability,
+      resources,
       extraArgs,
     } = resourceRequestDto;
     return new Resource({
@@ -20,25 +21,30 @@ export class ResourcesDtoConverter {
       type,
       receivingProbability,
       rarenessProbability,
+      resources,
       extraArgs,
     });
   }
 
   public convertTo(resource: Resource): ResourceResponseDto {
     const {
+      id,
       name,
       amount,
       type,
       receivingProbability,
       rarenessProbability,
+      resources,
       extraArgs,
     } = resource;
     return new ResourceResponseDto({
+      id,
       name,
       amount,
       type,
       receivingProbability,
       rarenessProbability,
+      resources,
       extraArgs,
     });
   }

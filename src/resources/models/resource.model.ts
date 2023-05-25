@@ -8,6 +8,7 @@ export class Resource {
   amount?: number;
   receivingProbability?: number;
   rarenessProbability?: number;
+  resources: any;
   extraArgs?: any;
 
   constructor(partial: Partial<Resource>) {

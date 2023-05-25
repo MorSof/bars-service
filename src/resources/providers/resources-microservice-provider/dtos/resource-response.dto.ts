@@ -8,6 +8,7 @@ export class ResourceResponseDto {
   amount?: number;
   receivingProbability?: number;
   rarenessProbability?: number;
+  resources: any;
   extraArgs?: object;
 
   constructor(partial: Partial<ResourceResponseDto>) {
