@@ -4,15 +4,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { Resource } from '../../resources/models/resource.model';
+import { BarOwnersProgressionEntity } from './bar-owners-progression.entity';
 
 @Entity({ name: 'bars' })
 export class BarEntity {
@@ -34,6 +33,13 @@ export class BarEntity {
   @ManyToOne(() => BarEntity, (bar) => bar.milestones)
   @JoinColumn({ name: 'parent_id' })
   parent: BarEntity;
+
+  @OneToMany(
+    () => BarOwnersProgressionEntity,
+    (barOwnersProgressionEntity) => barOwnersProgressionEntity.currentBar,
+    { nullable: true },
+  )
+  barOwnersProgressionEntity?: BarOwnersProgressionEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

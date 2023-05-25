@@ -5,6 +5,7 @@ import { BarsModule } from './bars/bars.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BarEntity } from './bars/entities/bar.entity';
+import { BarOwnersProgressionEntity } from './bars/entities/bar-owners-progression.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { BarEntity } from './bars/entities/bar.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [BarEntity],
+        entities: [BarEntity, BarOwnersProgressionEntity],
         synchronize: true,
       }),
       inject: [ConfigService],
