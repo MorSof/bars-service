@@ -5,7 +5,8 @@ import { BarsModule } from './bars/bars.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BarEntity } from './bars/entities/bar.entity';
-import { BarOwnersProgressionEntity } from './bars/entities/bar-owners-progression.entity';
+import { BarOwnersProgressionEntity } from './bar-owners-progression/entities/bar-owners-progression.entity';
+import { BarOwnersProgressionModule } from './bar-owners-progression/bar-owners-progression.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { BarOwnersProgressionEntity } from './bars/entities/bar-owners-progressi
       inject: [ConfigService],
     }),
     BarsModule,
+    BarOwnersProgressionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

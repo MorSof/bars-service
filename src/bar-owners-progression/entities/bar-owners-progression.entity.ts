@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BarEntity } from './bar.entity';
+import { BarEntity } from '../../bars/entities/bar.entity';
 
 @Entity({ name: 'bars_owners_progression' })
 export class BarOwnersProgressionEntity {
@@ -44,7 +44,7 @@ export class BarOwnersProgressionEntity {
     this.updatedAt = new Date();
   }
 
-  constructor(partial: Partial<BarEntity>) {
+  constructor(partial: Partial<BarOwnersProgressionEntity>) {
     Object.assign(this, partial);
   }
 }

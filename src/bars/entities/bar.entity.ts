@@ -11,7 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Resource } from '../../resources/models/resource.model';
-import { BarOwnersProgressionEntity } from './bar-owners-progression.entity';
+import { BarOwnersProgressionEntity } from '../../bar-owners-progression/entities/bar-owners-progression.entity';
 
 @Entity({ name: 'bars' })
 export class BarEntity {

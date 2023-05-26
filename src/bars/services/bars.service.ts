@@ -28,7 +28,7 @@ export class BarsService {
     return bar;
   }
 
-  async findByValues(name: string, barIndex: number): Promise<Bar[]> {
+  async findByValues(name?: string, barIndex?: number): Promise<Bar[]> {
     const entities = await this.barsRepository.find({
       where: {
         name,
@@ -36,6 +36,9 @@ export class BarsService {
         parent: IsNull(),
       },
       relations: ['milestones'],
+      order: {
+        barIndex: 'ASC',
+      },
     });
     if (!entities) {
       throw new NotFoundException(`bar was not found`);
