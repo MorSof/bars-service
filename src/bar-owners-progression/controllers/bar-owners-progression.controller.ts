@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Query } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { BarOwnersProgressionService } from '../services/bar-owners-progression.service';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { BarOwnersProgressionDtoConverter } from '../services/bar-owners-progression-dto.converter';
@@ -30,20 +30,4 @@ export class BarOwnersProgressionController {
       );
     return this.barOwnersProgressionDtoConverter.toDto(barOwnersProgression);
   }
-
-  // @ApiOkResponse({
-  //   description: 'The bars records',
-  //   type: BarsResponseDto,
-  //   isArray: true,
-  // })
-  // @ApiQuery({ name: 'name', type: String, required: false })
-  // @ApiQuery({ name: 'barIndex', type: Number, required: false })
-  // @Get()
-  // async findByValue(
-  //   @Query('name') name: string,
-  //   @Query('barIndex') barIndex: number,
-  // ): Promise<BarsResponseDto[]> {
-  //   const bars: Bar[] = await this.barsService.findByValues(name, barIndex);
-  //   return bars.map((resource) => this.barsDtoConverter.toDto(resource));
-  // }
 }

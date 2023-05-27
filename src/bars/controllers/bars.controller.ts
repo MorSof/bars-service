@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Get,
-  Query,
-  DefaultValuePipe,
-  ParseBoolPipe,
-  ParseIntPipe,
-} from '@nestjs/common';
+import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { BarsService } from '../services/bars.service';
 import { Bar } from '../models/bar.model';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
