@@ -7,6 +7,4 @@ export abstract class ResourcesProvider {
     ownerId: number,
     fulfillResourcesProbabilities: boolean,
   ): Promise<Resource[]>;
-
-  abstract removeLevelsResources(levelId: number);
 }

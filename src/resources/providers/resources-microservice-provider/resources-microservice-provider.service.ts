@@ -102,13 +102,4 @@ export class ResourcesMicroserviceProvider extends ResourcesProvider {
         }),
     );
   }
-
-  async removeLevelsResources(levelId: number): Promise<boolean> {
-    await firstValueFrom(
-      this.httpService.delete<void>(
-        `${this.RESOURCES_BASE_URL}${this.REMOVE_RESOURCE_PATH}/owner/level/${levelId}`,
-      ),
-    );
-    return true;
-  }
 }
