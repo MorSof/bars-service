@@ -27,10 +27,19 @@ export class BarEntity {
   @Column()
   maxValue: number;
 
-  @OneToMany(() => BarEntity, (bar) => bar.parent)
+  /*@OneToMany(() => BarEntity, (bar) => bar.parent)           this was the former version
   milestones: BarEntity[];
 
-  @ManyToOne(() => BarEntity, (bar) => bar.milestones)
+  @ManyToOne(() => BarEntity, (bar) => bar.milestones)*/
+
+  @OneToMany(() => BarEntity, (bar) => bar.parent, {
+    onDelete: 'CASCADE', // Cascade delete for milestones
+  })
+  milestones: BarEntity[];
+
+  @ManyToOne(() => BarEntity, (bar) => bar.milestones, {
+    onDelete: 'CASCADE', // Cascade delete for parent
+  })
   @JoinColumn({ name: 'parent_id' })
   parent: BarEntity;
 

@@ -1,4 +1,5 @@
 import { IsNull, TreeRepository } from 'typeorm';
+
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   ConflictException,
@@ -26,6 +27,22 @@ export class BarsService {
     bar = this.barsEntityConverter.toModel(barParentEntity);
     await this.resourcesService.createBarResources(bar);
     return bar;
+  }
+
+  async remove(bar: Bar): Promise<void> {
+    // omris
+    //todo: delete all resources of bar
+    const barParentEntity: BarEntity = this.barsEntityConverter.toEntity(bar);
+    const barExists = await this.isBarExists(barParentEntity);
+    if (barExists) {
+      //Perform the deletion logic here
+      await this.barsRepository.remove(barParentEntity);
+    } else {
+      ///todo: ask if we have our own 'error' class
+      const error = new Error('Resource not found');
+      (error as any).statusCode = 404;
+      throw error;
+    }
   }
 
   async findByValues(name?: string, barIndex?: number): Promise<Bar[]> {
@@ -86,6 +103,19 @@ export class BarsService {
     return await this.barsRepository.save(barParentEntity);
   }
 
+  async isBarExists(barParentEntity: BarEntity): Promise<boolean> {
+    //todo: use isexist in validate
+    // omris
+    const entity = await this.barsRepository.findOneBy({
+      name: barParentEntity.name,
+      barIndex: barParentEntity.barIndex,
+      parent: IsNull(),
+    });
+    if (entity) {
+      return true;
+    }
+    return false;
+  }
   private async validateBarDoesNotExists(barParentEntity: BarEntity) {
     const entity = await this.barsRepository.findOneBy({
       name: barParentEntity.name,

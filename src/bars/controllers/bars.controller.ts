@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Query } from '@nestjs/common';
+import {Controller, Post, Body, Get, Query, Delete, Param} from '@nestjs/common';
 import { BarsService } from '../services/bars.service';
 import { Bar } from '../models/bar.model';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -42,5 +42,14 @@ export class BarsController {
   ): Promise<BarsResponseDto[]> {
     const bars: Bar[] = await this.barsService.findByValues(name, barIndex);
     return bars.map((resource) => this.barsDtoConverter.toDto(resource));
+  }
+
+  @ApiOkResponse({
+    description: 'The bar has been deleted',
+  })
+  @Delete(':id')
+  async remove(@Param('id') id: number): Promise<void> {
+    const bar: Bar = { id };
+    await this.barsService.remove(bar);
   }
 }
