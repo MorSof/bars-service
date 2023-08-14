@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Resource } from '../models/resource.model';
-import { ResourceRequestDto } from '../dtos/resource-request.dto';
-import { ResourceResponseDto } from '../dtos/resource-response.dto';
+import { ResourceRequestDto, ResourceResponseDto } from '../../api/build';
 
 @Injectable()
 export class ResourcesDtoConverter {
@@ -37,15 +36,15 @@ export class ResourcesDtoConverter {
       resources,
       extraArgs,
     } = resource;
-    return new ResourceResponseDto({
-      id,
-      name,
-      amount,
-      type,
-      receivingProbability,
-      rarenessProbability,
-      resources,
-      extraArgs,
-    });
+    const resourceResponseDto = new ResourceResponseDto();
+    resourceResponseDto.id = id;
+    resourceResponseDto.name = name;
+    resourceResponseDto.amount = amount;
+    resourceResponseDto.type = type;
+    resourceResponseDto.receivingProbability = receivingProbability;
+    resourceResponseDto.rarenessProbability = rarenessProbability;
+    resourceResponseDto.resources = resources;
+    resourceResponseDto.extraArgs = extraArgs;
+    return resourceResponseDto;
   }
 }

@@ -18,6 +18,8 @@ Before you begin, make sure that you have the following requirements installed o
 ```shell
 $ nvm use
 $ npm install
+$ npm install @openapitools/openapi-generator-cli -g
+$ openapi-generator-cli generate -i ./src/api/openapi/spec.yaml -g typescript -o ./src/api/build
 ```
 
 ## Running locally
@@ -43,9 +45,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-Now everything is set! The service is exposed at: http://localhost:3005
+Now everything is set! The service is exposed at: http://localhost:3002
 
-The OpenAPI (Swagger) documentation is available at: http://localhost:3005/api
+The OpenAPI (Swagger) documentation is available at: http://localhost:3002/api
 
 ## Testing
 

@@ -1,12 +1,9 @@
 import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { BarsService } from '../services/bars.service';
 import { Bar } from '../models/bar.model';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { BarsRequestDto } from '../dtos/bars-request.dto';
-import { BarsResponseDto } from '../dtos/bars-response.dto';
 import { BarsDtoConverter } from '../services/bars-dto.converter';
+import { BarsRequestDto, BarsResponseDto } from '../../api/build';
 
-@ApiTags('bars')
 @Controller('v1/bars')
 export class BarsController {
   constructor(
@@ -14,10 +11,6 @@ export class BarsController {
     private readonly barsDtoConverter: BarsDtoConverter,
   ) {}
 
-  @ApiOkResponse({
-    description: 'The bars record',
-    type: BarsResponseDto,
-  })
   @Post()
   async create(
     @Body() barsRequestDto: BarsRequestDto,
@@ -28,13 +21,6 @@ export class BarsController {
     return this.barsDtoConverter.toDto(bar);
   }
 
-  @ApiOkResponse({
-    description: 'The bars records',
-    type: BarsResponseDto,
-    isArray: true,
-  })
-  @ApiQuery({ name: 'name', type: String, required: false })
-  @ApiQuery({ name: 'barIndex', type: Number, required: false })
   @Get()
   async findByValue(
     @Query('name') name: string,

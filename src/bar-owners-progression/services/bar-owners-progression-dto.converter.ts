@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { BarOwnersProgression } from '../models/bar-owners-progression.model';
-import { BarOwnersProgressionRequestDto } from '../dtos/bar-owners-progression-request.dto';
-import { BarOwnersProgressionResponseDto } from '../dtos/bar-owners-progression-response.dto';
 import { BarsDtoConverter } from '../../bars/services/bars-dto.converter';
+import {
+  BarOwnersProgressionRequestDto,
+  BarOwnersProgressionResponseDto,
+} from '../../api/build';
 
 @Injectable()
 export class BarOwnersProgressionDtoConverter {
@@ -21,14 +23,13 @@ export class BarOwnersProgressionDtoConverter {
   public toDto(model: BarOwnersProgression): BarOwnersProgressionResponseDto {
     const { id, ownerType, ownerId, value, currentBar } = model;
     const dto: BarOwnersProgressionResponseDto =
-      new BarOwnersProgressionResponseDto({
-        id,
-        barName: model.currentBar.name,
-        ownerType,
-        ownerId,
-        value,
-        currentBar: this.barsDtoConverter.toDto(currentBar),
-      });
+      new BarOwnersProgressionResponseDto();
+    dto.id = id;
+    dto.barName = model.currentBar.name;
+    dto.ownerType = ownerType;
+    dto.ownerId = ownerId;
+    dto.value = value;
+    dto.currentBar = this.barsDtoConverter.toDto(currentBar);
     return dto;
   }
 }

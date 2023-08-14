@@ -1,0 +1,240 @@
+openapi: 3.0.0
+info:
+  title: Bars Service API
+  version: 1.0.0
+paths:
+  /v1/bars:
+    post:
+      tags:
+        - bars
+      summary: Create a new bar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BarsRequestDto'
+      responses:
+        200:
+          description: The bars record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarsResponseDto'
+    get:
+      tags:
+        - bars
+      summary: Get bars by value
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: barIndex
+          in: query
+          schema:
+            type: number
+      responses:
+        200:
+          description: The bars records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BarsResponseDto'
+  /v1/bars-owners-progression:
+    post:
+      tags:
+        - bar owners progression
+      summary: Create bar owners progression record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BarOwnersProgressionRequestDto'
+      responses:
+        200:
+          description: The bar owners progression record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarOwnersProgressionResponseDto'
+
+components:
+  schemas:
+    ResourceRequestDto:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the resource
+          default: 'wrapper'
+        name:
+          type: string
+          description: The name of the resource
+          default: 'chest'
+        amount:
+          type: number
+          nullable: true
+        receivingProbability:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 1
+        rarenessProbability:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 0.5
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRequestDto'
+        extraArgs:
+          type: object
+          additionalProperties: true
+          nullable: true
+
+    ResourceResponseDto:
+      type: object
+      properties:
+        id:
+          type: number
+        type:
+          type: string
+        name:
+          type: string
+        amount:
+          type: number
+          nullable: true
+        receivingProbability:
+          type: number
+          nullable: true
+        rarenessProbability:
+          type: number
+          nullable: true
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceResponseDto'
+        extraArgs:
+          type: object
+          nullable: true
+
+    BarsRequestDto:
+      type: object
+      properties:
+        maxValue:
+          type: number
+          description: The max value to fill the bar
+          default: 100
+        name:
+          type: string
+        barIndex:
+          type: number
+        milestones:
+          type: array
+          items:
+            $ref: '#/components/schemas/BarsRequestDto'
+        rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRequestDto'
+      example:
+        maxValue: 100
+        name: "string"
+        barIndex: 0
+        milestones:
+          - maxValue: 50
+            rewards:
+              - type: "wrapper"
+                name: "chest"
+                amount: null
+                receivingProbability: 1
+                rarenessProbability: 0.5
+                resources:
+                  - type: "currency"
+                    name: "coins"
+                    amount: null
+                    receivingProbability: 1
+                    rarenessProbability: 0.5
+                    extraArgs:
+                      additionalProp1: { }
+                extraArgs:
+                  additionalProp1: { }
+        rewards:
+          - type: "wrapper"
+            name: "chest"
+            amount: null
+            receivingProbability: 1
+            rarenessProbability: 0.5
+            resources:
+              - type: "currency"
+                name: "coins"
+                amount: null
+                receivingProbability: 1
+                rarenessProbability: 0.5
+                extraArgs:
+                  additionalProp1: { }
+            extraArgs:
+              additionalProp1: { }
+
+    BarsResponseDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        barIndex:
+          type: number
+        maxValue:
+          type: number
+        milestones:
+          type: array
+          items:
+            $ref: '#/components/schemas/BarsResponseDto'
+        rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceResponseDto'
+
+    BarOwnersProgressionResponseDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The id of the bar progression
+        value:
+          type: number
+          description: The value the owner filled in the bar
+        barName:
+          type: string
+          description: The bar name
+        ownerType:
+          type: string
+          description: The progression owner type
+        ownerId:
+          type: string
+          description: The progression owner id
+        currentBar:
+          $ref: '#/components/schemas/BarsResponseDto'
+
+    BarOwnersProgressionRequestDto:
+      type: object
+      properties:
+        barName:
+          type: string
+          description: The bar name
+        ownerType:
+          type: string
+          description: The progression owner type
+        ownerId:
+          type: string
+          description: The progression owner id
+      required:
+        - barName
+        - ownerType
+        - ownerId
