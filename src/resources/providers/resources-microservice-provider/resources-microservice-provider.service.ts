@@ -63,14 +63,14 @@ export class ResourcesMicroserviceProvider extends ResourcesProvider {
     ownerId: number,
     fulfillResourcesProbabilities: boolean,
   ): Promise<Resource[]> {
-    return (
-      await this.resourcesApi.v1ResourcesGet(
-        ownerId.toString(),
-        null,
-        null,
-        fulfillResourcesProbabilities,
-      )
-    ).map((dto) => {
+    const res = await this.resourcesApi.v1ResourcesGet(
+      ownerId.toString(),
+      'bar',
+      undefined,
+      fulfillResourcesProbabilities,
+    );
+
+    return res.map((dto) => {
       return new Resource({
         id: dto.id,
         type: dto.type,
